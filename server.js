@@ -10,31 +10,14 @@ app.use(express.static('./public'));
 
 console.log('server starting...');
 
-// 100개의 100까지의 난수 생성
-function createRandomNumbers() {
-  const arr = [];
-  for(let i=0; i<50; i++) {
-    arr.push(~~(Math.random() * 100));
-  }
-  return arr;
-}
-
-function reset() {
-  // 만들어서 전역에 저장하고
-  NUMBERS = createRandomNumbers();
-
-  // 이 난수에 대한 아이디를 저장한다
-  ID = uuid();
-}
 
 // 전역 쓰기 싫지만 그냥 쓴다, 기본값
 let USERCOUNT = 0;
-let NUMBERS = createRandomNumbers();
-let ID = uuid();
+let RESETCOUNT = 0;
+let NUMBERS = [];
+let ID = -1;
 
 console.log('initial vectors::');
-console.log('NUMBERS', NUMBERS);
-console.log('ID', ID);
 
 // 접속하면 난수 ID 보낸다
 room.on('connection', function(socket) {
@@ -49,6 +32,7 @@ room.on('connection', function(socket) {
     reset();
     room.emit('hide');
     room.emit('randId', ID);
+    room.emit('resetCount', ++RESETCOUNT);
   });
 
   // 접속해제
@@ -70,6 +54,23 @@ room.on('connection', function(socket) {
   room.emit('randId', ID);
 });
 
-// 리셋
-
+// 서버 구동
 server.listen(process.env.PORT || 8080);
+
+//////////////////////////////////////////////////////////함수들
+// 100개의 100까지의 난수 생성
+function createRandomNumbers() {
+  const arr = [];
+  for(let i=0; i<50; i++) {
+    arr.push(~~(Math.random() * 100));
+  }
+  return arr;
+}
+
+function reset() {
+  // 만들어서 전역에 저장하고
+  NUMBERS = createRandomNumbers();
+
+  // 이 난수에 대한 아이디를 저장한다
+  ID = uuid();
+}

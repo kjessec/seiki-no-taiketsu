@@ -53,6 +53,7 @@
 	var userCountTarget = document.getElementById('userCount');
 	var randIdTarget = document.getElementById('randId');
 	var randNumTarget = document.getElementById('rand');
+	var resetTarget = document.getElementById('resetCount');
 	var revealButton = document.getElementById('reveal');
 	var resetButton = document.getElementById('reset');
 
@@ -65,6 +66,9 @@
 	//
 	sock.on('userCount', function (userCount) {
 	  return userCountTarget.innerHTML = userCount;
+	});
+	sock.on('resetCount', function (resetCount) {
+	  return resetTarget.innerHTML = resetCount;
 	});
 	sock.on('randId', function (randId) {
 	  return randIdTarget.innerHTML = randId;
