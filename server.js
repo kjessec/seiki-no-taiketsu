@@ -52,6 +52,9 @@ room.on('connection', function(socket) {
 
   // ID보냄 (난수 매칭 확인용)
   room.emit('randId', ID);
+
+  // 난수 카운트 보냄
+  room.emit('resetCount', resetCount);
 });
 
 // 서버 구동
