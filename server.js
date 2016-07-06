@@ -54,7 +54,7 @@ room.on('connection', function(socket) {
   room.emit('randId', ID);
 
   // 난수 카운트 보냄
-  room.emit('resetCount', resetCount);
+  room.emit('resetCount', RESETCOUNT);
 });
 
 // 서버 구동
